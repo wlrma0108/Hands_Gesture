@@ -3,7 +3,7 @@ import mediapipe as mp
 import numpy as np
 import time, os
 
-actions =['come','away','spin']
+action =['come','away','spin']
 seq_length =20
 secs_for_action=30
 
@@ -24,7 +24,7 @@ while cap.isOpened():
         data =[]
         ret,img=cap.read()
         img=cv2.flip(img,1)
-        cv2.putText(img, f'Waiting for collection {action.upper()} action...', org(10,30), fontFace=cv2.FONT_HERSHEY_SIMPLEX,fontScale=1,color=(255,255,255),thickness=2)
+        cv2.putText(img, f'Waiting for collection {action.upper()} action...', org=(10, 30), fontFace=cv2.FONT_HERSHEY_SIMPLEX,fontScale=1,color=(255,255,255),thickness=2)
         cv2.imshow('img',img)
         cv2.waitKey(3000)
         
@@ -62,7 +62,7 @@ while cap.isOpened():
             if cv2.waitkey(1) ==ord('q'):
                 break
         data = np.array(data)
-        print(actions,data.shape)
+        print(action,data.shape)
         np.save(os.path.join('dataset', f'raw_{action}_{created_time}'),data)
         
         full_seq_data =[]
@@ -71,6 +71,6 @@ while cap.isOpened():
         
         full_seq_data = np.array(full_seq_data)
         print(action, full_seq_data.shape)
-        np.save(os.path.join('dataset', f'seq_{action}_{created}'), full_seq_data)
+        np.save(os.path.join('dataset', f'seq_{action}_{created_time}'), full_seq_data)
     break
             
